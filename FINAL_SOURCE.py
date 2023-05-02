@@ -39,7 +39,6 @@ class Fact:
 
    @staticmethod
    def parse_fact(fact_str):
-      # Example: female(princess_diana).
       fact_str = fact_str.strip().rstrip('.').replace(' ', '')
       sep_idx = -1
       if '(' in fact_str: 
@@ -47,8 +46,6 @@ class Fact:
       elif '\\' or '=' in fact_str:
          sep_idx = fact_str.index('\\' or '=')
          
-         
-      # Op and args are separated by '('
       op = fact_str[:sep_idx]
       args = fact_str[sep_idx + 1 : -1].split(',')
       return Fact(op, args)

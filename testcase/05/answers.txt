@@ -1,0 +1,7 @@
+married(X, jill).
+X = jack ;
+X = john.
+
+married(jill, X).
+false.
+

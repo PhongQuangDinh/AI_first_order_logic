@@ -134,5 +134,4 @@ niece(Person,AuntUncle):-(aunt(AuntUncle,Person);uncle(AuntUncle,Person)), femal
 nephew(Person,AuntUncle):-(aunt(AuntUncle,Person);uncle(AuntUncle,Person)), male(Person).
 greatniece(Person,GAU):-(greataunt(GAU,Person);greatuncle(GAU,Person)),female(Person).
 greatnephew(Person,GAU):-(greataunt(GAU,Person);greatuncle(GAU,Person)),male(Person).
-
 marriedSibling(Person1, Person2):-married(Person1,Person2),sibling(Person1,Person2).

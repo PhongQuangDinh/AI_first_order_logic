@@ -1,5 +1,5 @@
 mother(X,triton).
-children(X,zeus).
+child(X,zeus).
 grandmother(X,benthesikyme).
 daughter(hermes,demeter).
 sibling(hebe,triton).
@@ -12,9 +12,10 @@ husband(X,rhea).
 sibling(hephaestus,hebe).
 grandmother(X,ilithyia).
 aunt(X,ares).
-sibling(X,Apollo).
+sibling(X,apollo).
 wife(X,poseidon).
 wife(demeter,hera).
 daughter(X,hera).
 son(trion,amphitrite).
 wife(X,ares).
+marriedSibling(cronus,rhea).

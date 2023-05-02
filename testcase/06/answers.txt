@@ -1,0 +1,87 @@
+mother(X, triton).
+X = amphitrite.
+
+child(X, zeus).
+X = hephaestus ;
+X = dionysus ;
+X = ares ;
+X = artemis ;
+X = apollo ;
+X = hermes ;
+X = athena ;
+X = aphrodite ;
+X = ilithyia ;
+X = persephone ;
+X = hebe.
+
+grandmother(X, benthesikyme).
+X = rhea.
+
+daughter(hermes, demeter).
+false.
+
+sibling(hebe, triton).
+false.
+
+father(X, apollo).
+X = zeus.
+
+aunt(X, ares).
+X = hera ;
+X = hestia ;
+X = demeter.
+
+parent(hera, persephone).
+false.
+
+grandfather(X, dinoysus).
+false.
+
+sister(athena, hermes).
+true.
+
+husband(X, rhea).
+X = cronus.
+
+sibling(hephaestus, hebe).
+true.
+
+grandmother(X, ilithyia).
+X = rhea.
+
+aunt(X, ares).
+X = hera ;
+X = hestia ;
+X = demeter.
+
+sibling(X, apollo).
+X = hephaestus ;
+X = dionysus ;
+X = ares ;
+X = artemis ;
+X = hermes ;
+X = athena ;
+X = aphrodite ;
+X = ilithyia ;
+X = persephone ;
+X = hebe.
+
+wife(X, poseidon).
+X = amphitrite.
+
+wife(demeter, hera).
+false.
+
+daughter(X, hera).
+X = ilithyia ;
+X = hebe.
+
+son(trion, amphitrite).
+false.
+
+wife(X, ares).
+X = aphrodite.
+
+marriedSibling(cronus, rhea).
+true.
+
