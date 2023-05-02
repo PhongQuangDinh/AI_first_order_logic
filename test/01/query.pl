@@ -1,0 +1,2 @@
+criminal(X).
+weapon(X).

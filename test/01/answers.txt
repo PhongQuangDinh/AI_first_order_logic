@@ -1,0 +1,6 @@
+criminal(X).
+X = west.
+
+weapon(X).
+X = b52.
+

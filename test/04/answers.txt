@@ -1,0 +1,6 @@
+mother(X, princeCharles).
+X = queenElizabethII.
+
+father(X, princeCharles).
+X = princePhillip.
+
