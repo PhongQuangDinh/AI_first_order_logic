@@ -1,0 +1,53 @@
+child(X, molly_weasley).
+X = bill_weasley ;
+X = fred_weasley ;
+X = george_weasley ;
+X = percy_weasley ;
+X = ron_weasley ;
+X = ginny_weasley.
+
+wife(hermione_granger, harry_potter).
+false.
+
+boyfriend(X, victoire_weasley).
+X = teddy_lupin.
+
+girlfriend(roxanne_weasley, teddy_lupin).
+false.
+
+son(X, audrey_weasley).
+false.
+
+aunt(X, dominique_weasley).
+X = hermione_granger ;
+X = audrey_weasley ;
+X = angelina_johnson ;
+X = ginny_weasley.
+
+uncle(X, lily_luna_potter).
+X = bill_weasley ;
+X = fred_weasley ;
+X = george_weasley ;
+X = percy_weasley ;
+X = ron_weasley.
+
+grandchild(X, arthur_weasley).
+X = roxanne_weasley ;
+X = louis_weasley ;
+X = lucy_weasley ;
+X = hugo_weasley ;
+X = albus_severus_potter ;
+X = molly_weasley_ii ;
+X = rose_weasley ;
+X = james_sirius_potter ;
+X = lily_luna_potter ;
+X = victoire_weasley ;
+X = dominique_weasley ;
+X = fred_weasley_ii.
+
+grandson(james_sirius_potter, X).
+X = arthur_weasley ;
+X = molly_weasley ;
+X = james_potter ;
+X = lily_potter.
+

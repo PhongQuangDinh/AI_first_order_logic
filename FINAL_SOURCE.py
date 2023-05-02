@@ -41,8 +41,13 @@ class Fact:
    def parse_fact(fact_str):
       # Example: female(princess_diana).
       fact_str = fact_str.strip().rstrip('.').replace(' ', '')
-      sep_idx = fact_str.index('(')
-
+      sep_idx = -1
+      if '(' in fact_str: 
+         sep_idx = fact_str.index('(')
+      elif '\\' or '=' in fact_str:
+         sep_idx = fact_str.index('\\' or '=')
+         
+         
       # Op and args are separated by '('
       op = fact_str[:sep_idx]
       args = fact_str[sep_idx + 1 : -1].split(',')
@@ -111,7 +116,7 @@ class Substitution:
    def add(self, var, x):
       self.mappings[var] = x 
 
-def subst(facts_1, facts_2):           # Generalized Modus Ponens
+def subst(facts_1, facts_2):   
    if len(facts_1) != len(facts_2):
       return False
 
@@ -134,32 +139,25 @@ def forward_chaining(kb, alpha):
 
    last_generated_facts = kb.facts.copy()
 
-   while True:
+   timelimit = 10000
+   while timelimit > 0:
+      timelimit -= 1
       new_facts = set()
  
-      # Optimize: Incremental forward chaining
-      # At iteration t, check a rule only if its premises includes at least
-      # a conjunct pi that unified with the fact pi' newly inferred at iteration t - 1
       for rule in kb.rules:
          if not rule.may_triggered(last_generated_facts):
             continue
 
          num_premises = rule.get_num_premises()
-         # Get facts that relevant to the current rule
          potential_facts = kb.get_potential_facts(rule)
-
-         # Check if rule contains premises with the same predicate
-         if not rule.dup_predicate:        
-            potential_premises = itertools.combinations(sorted(potential_facts), num_premises)
-         else:
-            # Assumption on order of premises may failed on something like grandparent rule with two parent relations
-            potential_premises = itertools.permutations(potential_facts, num_premises)
+         
+         if not rule.dup_predicate: potential_premises = itertools.combinations(sorted(potential_facts), num_premises)
+         else: potential_premises = itertools.permutations(potential_facts, num_premises)
 
          for tuple_premises in potential_premises:
             premises = [premise for premise in tuple_premises]
             theta = subst(rule.premises, premises)
-            if not theta:
-               continue
+            if not theta: continue
                         
             new_fact = rule.conclusion.copy()
             theta.substitute(new_fact)
@@ -180,6 +178,7 @@ def forward_chaining(kb, alpha):
             res.add('false')
          return res
       kb.facts.update(new_facts)
+   return ("broken thing")
 
 class Sentence:
 
@@ -198,11 +197,11 @@ class Sentence:
    def next(inp_str):
       idx = 0
       next_str = inp_str[idx].strip()
-      if next_str.startswith('/*'):          # Comments
+      if next_str.startswith('/*'):     
          while not next_str.endswith('*/'):
             idx += 1
             next_str += inp_str[idx].strip()
-      elif next_str:                         # Queries
+      elif next_str:                   
          while not next_str.endswith('.'):
             idx += 1
             next_str += inp_str[idx].strip()
@@ -211,9 +210,9 @@ class Sentence:
 
 class Rule:
    def __init__(self, conclusion=Fact(), premises=[]):
-      self.conclusion = conclusion        # Inferred fact
-      self.premises = premises            # Conditions: list of facts
-      self.ops = self.get_ops()           # List of related relations and functions
+      self.conclusion = conclusion   
+      self.premises = premises     
+      self.ops = self.get_ops()        
 
       self.premises.sort()
       self.dup_predicate = self.detect_dup_predicate()
@@ -237,7 +236,6 @@ class Rule:
       return fact_op in self.ops
 
    def may_triggered(self, new_facts):
-      # Check if any fact pi in new_facts is unified with a premise in rule
       for new_fact in new_facts:
          for premise in self.premises:
             if unify(new_fact, premise, Substitution()):
@@ -253,11 +251,9 @@ class Rule:
 
    @staticmethod
    def parse_rule(rule_str):       
-      # Example: daughter(Person, Parent) :- female(Person), parent(Parent, Person).
       rule_str = rule_str.strip().rstrip('.').replace(' ', '')
       sep_idx = rule_str.find(':-')
-
-      # Get conclusion (lhs) and premises (rhs) seperated by ':-'
+      
       conclusion = Fact.parse_fact(rule_str[: sep_idx])
       premises = []
       list_fact_str = rule_str[sep_idx + 2:].split('),')
@@ -303,19 +299,17 @@ class KnowledgeBase:
          elif sent_type == 'rule':
             rule = Rule.parse_rule(sent_str)
             kb.add_rule(rule)
-            
-# Edit input knowledge, query and output path here
-test_number = input().strip()
-inp_file = 'test/' + test_number + '/knowledge.pl'
-query_file = 'test/' + test_number + '/query.pl'
-outp_file = 'test/' + test_number + '/answers.txt'
+
+# Main function
+test_number = input("Choose the number of test case for example 04: ").strip()
+inp_file = 'testcase/' + test_number + '/knowledge.pl'
+query_file = 'testcase/' + test_number + '/query.pl'
+outp_file = 'testcase/' + test_number + '/answers.txt'
 
 kb = KnowledgeBase()
 with open(inp_file, 'r') as f_in:
    list_sentences = f_in.readlines()
    KnowledgeBase.declare(kb, list_sentences)
-
-print('Done initialize knowledge base from {}.'.format(inp_file))
 
 with open(query_file, 'r') as f_query:
    with open(outp_file, 'w') as f_out:

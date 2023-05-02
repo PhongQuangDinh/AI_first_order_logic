@@ -1,7 +1,0 @@
-married(X, jill).
-X = john ;
-X = jack.
-
-married(jill, X).
-false.
-
